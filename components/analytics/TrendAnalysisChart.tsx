@@ -33,20 +33,19 @@ const TrendAnalysisChart: React.FC<TrendAnalysisChartProps> = ({
   
   // Calculate the positions for each point in the chart
   const calculatePosition = (value: number, index: number, array: DataPoint[]) => {
-    const x = `${(index / (array.length - 1)) * 100}%`
-    const y = `${100 - ((value - minValue) / (maxValue - minValue)) * 100}%`
-    return { x, y }
+    const x = (index / (array.length - 1)) * 100;
+    const y = 100 - ((value - minValue) / (maxValue - minValue)) * 100;
+    return { x, y };
   }
   
   // Generate points for the SVG path
-  const generatePath = (points: {x: string, y: string}[]) => {
-    if (points.length === 0) return ""
-    
-    let path = `M ${points[0].x} ${points[0].y}`
+  const generatePath = (points: {x: number, y: number}[]) => {
+    if (points.length === 0) return "";
+    let path = `M ${points[0].x} ${points[0].y}`;
     for (let i = 1; i < points.length; i++) {
-      path += ` L ${points[i].x} ${points[i].y}`
+      path += ` L ${points[i].x} ${points[i].y}`;
     }
-    return path
+    return path;
   }
   
   const historicalPoints = data.historical.map((point, i, arr) => calculatePosition(point.value, i, arr))
@@ -80,15 +79,15 @@ const TrendAnalysisChart: React.FC<TrendAnalysisChartProps> = ({
       <CardContent>
         <div className="relative h-64 w-full">
           {/* Chart area */}
-          <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+          <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
             {/* Y-axis grid lines */}
             {[0, 20, 40, 60, 80, 100].map(percent => (
               <line 
                 key={`grid-${percent}`}
-                x1="0%" 
-                y1={`${percent}%`} 
-                x2="100%" 
-                y2={`${percent}%`}
+                x1={0} 
+                y1={percent} 
+                x2={100} 
+                y2={percent}
                 stroke="#f1f5f9" 
                 strokeWidth="1" 
               />
@@ -140,9 +139,9 @@ const TrendAnalysisChart: React.FC<TrendAnalysisChartProps> = ({
             {/* Divider between historical and prediction */}
             <line 
               x1={historicalPoints[historicalPoints.length - 1].x} 
-              y1="0%" 
+              y1={0} 
               x2={historicalPoints[historicalPoints.length - 1].x} 
-              y2="100%"
+              y2={100}
               stroke="#cbd5e1" 
               strokeWidth="1" 
               strokeDasharray="4 2" 

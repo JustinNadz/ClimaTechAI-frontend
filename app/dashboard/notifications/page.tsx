@@ -171,18 +171,18 @@ export default function NotificationsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-blue-900">Notifications</h1>
-            <p className="text-blue-600 mt-1">
+            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+            <p className="text-gray-600 mt-1">
               {unreadCount} unread notifications
               {emergencyCount > 0 && (
                 <span className="ml-2 text-red-600 font-semibold">({emergencyCount} emergency)</span>
               )}
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex items-center gap-3">
             <Button
               onClick={markAllAsRead}
               variant="outline"
@@ -252,7 +252,7 @@ export default function NotificationsPage() {
 
           <TabsContent value={activeTab} className="mt-6">
             <ScrollArea className="h-[600px]">
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {filteredNotifications.length === 0 ? (
                   <Card>
                     <CardContent className="p-8 text-center">
@@ -267,62 +267,51 @@ export default function NotificationsPage() {
                   filteredNotifications.map((notification) => (
                     <Card
                       key={notification.id}
-                      className={`transition-all hover:shadow-md ${
-                        !notification.read ? "border-l-4 border-l-blue-500 bg-blue-50/30" : ""
-                      }`}
+                      className={`border-gray-200 hover:shadow-lg transition-shadow h-full flex flex-col bg-white overflow-hidden ${!notification.read ? "border-l-4 border-l-blue-500 bg-blue-50/30" : ""}`}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-4">
+                      <CardContent className="p-6 flex flex-col h-full">
+                        <div className="flex items-start gap-4 mb-2">
                           <div className="flex-shrink-0 mt-1">{getNotificationIcon(notification.type)}</div>
-
                           <div className="flex-1 min-w-0">
-                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                              <div className="flex-1">
-                                <h3 className={`font-semibold text-gray-900 ${!notification.read ? "font-bold" : ""}`}>
-                                  {notification.title}
-                                </h3>
-                                <div className="flex flex-wrap items-center gap-2 mt-1">
-                                  <Badge variant="outline" className={getNotificationBadgeColor(notification.type)}>
-                                    {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
-                                  </Badge>
-                                  <Badge variant="outline" className="text-xs">
-                                    {notification.category}
-                                  </Badge>
-                                  <div className="flex items-center text-xs text-gray-500">
-                                    <Clock className="w-3 h-3 mr-1" />
-                                    {formatTimestamp(notification.timestamp)}
-                                  </div>
+                            <div className="flex flex-col gap-2 mb-2">
+                              <h3 className={`font-semibold text-gray-900 ${!notification.read ? "font-bold" : ""}`}>{notification.title}</h3>
+                              <div className="flex flex-wrap items-center gap-2 mt-1">
+                                <Badge variant="outline" className={getNotificationBadgeColor(notification.type)}>
+                                  {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
+                                </Badge>
+                                <Badge variant="outline" className="text-xs">
+                                  {notification.category}
+                                </Badge>
+                                <div className="flex items-center text-xs text-gray-500">
+                                  <Clock className="w-3 h-3 mr-1" />
+                                  {formatTimestamp(notification.timestamp)}
                                 </div>
                               </div>
-
-                              <div className="flex items-center gap-1 flex-shrink-0">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() =>
-                                    notification.read ? markAsUnread(notification.id) : markAsRead(notification.id)
-                                  }
-                                  className="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                >
-                                  {notification.read ? (
-                                    <MarkAsUnreadIcon className="w-4 h-4" />
-                                  ) : (
-                                    <CheckCircle className="w-4 h-4" />
-                                  )}
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => deleteNotification(notification.id)}
-                                  className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </Button>
-                              </div>
                             </div>
-
-                            <p className="text-gray-700 text-sm leading-relaxed">{notification.message}</p>
+                            <p className="text-gray-700 text-sm leading-relaxed mb-4">{notification.message}</p>
                           </div>
+                        </div>
+                        <div className="flex items-center gap-1 mt-auto">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => notification.read ? markAsUnread(notification.id) : markAsRead(notification.id)}
+                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                          >
+                            {notification.read ? (
+                              <MarkAsUnreadIcon className="w-4 h-4" />
+                            ) : (
+                              <CheckCircle className="w-4 h-4" />
+                            )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteNotification(notification.id)}
+                            className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>

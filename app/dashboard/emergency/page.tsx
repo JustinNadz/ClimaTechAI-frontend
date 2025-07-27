@@ -199,7 +199,7 @@ export default function EmergencyProtocolsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="w-full space-y-6">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
@@ -239,10 +239,10 @@ export default function EmergencyProtocolsPage() {
           </TabsList>
 
           {/* Response Protocols Tab */}
-          <TabsContent value="protocols" className="space-y-6">
-            <div className="grid gap-6">
+          <TabsContent value="protocols" className="space-y-6 w-full">
+            <div className="grid gap-6 w-full">
               {protocolTemplates.map((protocol) => (
-                <Card key={protocol.id} className="border-gray-200 hover:shadow-lg transition-shadow">
+                <Card key={protocol.id} className="border-gray-200 hover:shadow-lg transition-shadow w-full rounded-none">
                   <CardHeader className="pb-4">
                     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                       <div>
@@ -266,10 +266,10 @@ export default function EmergencyProtocolsPage() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
+                  <CardContent className="w-full">
+                    <div className="space-y-3 w-full">
                       <h4 className="font-semibold text-gray-900">Protocol Steps:</h4>
-                      <div className="space-y-2">
+                      <div className="space-y-2 w-full">
                         {protocol.steps.map((step, index) => (
                           <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:shadow-md transition-shadow">
                             <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-teal-400 text-white rounded-full flex items-center justify-center text-sm font-bold">

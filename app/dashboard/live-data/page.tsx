@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -10,13 +10,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Thermometer, Droplets, Wind, Activity, Zap, Gauge, MapPin, Clock, Download, RefreshCw } from "lucide-react"
 
 export default function LiveDataPage() {
-  const [lastUpdate, setLastUpdate] = useState(new Date())
+  const [lastUpdate, setLastUpdate] = useState<string>("");
   const [isRefreshing, setIsRefreshing] = useState(false)
+
+  useEffect(() => {
+    setLastUpdate(new Date().toLocaleTimeString());
+  }, []);
 
   const handleRefresh = () => {
     setIsRefreshing(true)
     setTimeout(() => {
-      setLastUpdate(new Date())
+      setLastUpdate(new Date().toLocaleTimeString())
       setIsRefreshing(false)
     }, 2000)
   }
@@ -138,7 +142,7 @@ export default function LiveDataPage() {
           <div className="flex items-center gap-3">
             <div className="flex items-center text-sm text-gray-600">
               <Clock className="w-4 h-4 mr-1" />
-              Last updated: {lastUpdate.toLocaleTimeString()}
+              Last updated: {lastUpdate || "--:--:--"}
             </div>
             <Button 
               onClick={handleRefresh} 
