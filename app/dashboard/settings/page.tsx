@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { Separator } from "@/components/ui/separator"
 import {
   Monitor,
   Bell,
@@ -27,6 +28,23 @@ import {
   RefreshCw,
   Save,
   RotateCcw,
+  Settings,
+  Eye,
+  EyeOff,
+  Globe,
+  Clock,
+  Calendar,
+  Zap,
+  HardDrive,
+  Bug,
+  TestTube,
+  Trash2,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  Activity,
+  TrendingUp,
+  MapPin,
 } from "lucide-react"
 
 export default function SettingsPage() {
@@ -74,9 +92,9 @@ export default function SettingsPage() {
   })
 
   const themeOptions = [
-    { value: "light", label: "Light Theme", icon: Sun },
-    { value: "dark", label: "Dark Theme", icon: Moon },
-    { value: "auto", label: "System Default", icon: Monitor },
+    { value: "light", label: "Light Theme", icon: Sun, description: "Clean and bright interface" },
+    { value: "dark", label: "Dark Theme", icon: Moon, description: "Easy on the eyes" },
+    { value: "auto", label: "System Default", icon: Monitor, description: "Follows your system" },
   ]
 
   const languageOptions = [
@@ -154,18 +172,18 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="w-full max-w-screen-xl mx-auto px-4 lg:px-12 py-8 space-y-8">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-blue-900">System Settings</h1>
-            <p className="text-blue-600 mt-1">Customize your ClimaTech AI experience</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">System Settings</h1>
+            <p className="text-gray-600">Customize your ClimaTech AI experience and preferences</p>
           </div>
           <div className="flex gap-3">
             <Button
               variant="outline"
               onClick={handleResetSettings}
-              className="border-blue-200 text-blue-700 bg-transparent"
+              className="border-gray-200 text-gray-700 hover:bg-gray-50"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Reset to Default
@@ -173,7 +191,7 @@ export default function SettingsPage() {
             <Button
               variant="outline"
               onClick={handleExportSettings}
-              className="border-blue-200 text-blue-700 bg-transparent"
+              className="border-gray-200 text-gray-700 hover:bg-gray-50"
             >
               <Download className="w-4 h-4 mr-2" />
               Export Settings
@@ -187,23 +205,32 @@ export default function SettingsPage() {
 
         {/* Settings Tabs */}
         <Tabs defaultValue="display" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-blue-50">
-            <TabsTrigger value="display" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+          <TabsList className="grid w-full grid-cols-4 bg-gray-50 p-1 rounded-lg">
+            <TabsTrigger 
+              value="display" 
+              className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm rounded-md"
+            >
               <Monitor className="w-4 h-4 mr-2" />
               Display
             </TabsTrigger>
             <TabsTrigger
               value="notifications"
-              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm rounded-md"
             >
               <Bell className="w-4 h-4 mr-2" />
               Notifications
             </TabsTrigger>
-            <TabsTrigger value="privacy" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger 
+              value="privacy" 
+              className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm rounded-md"
+            >
               <Shield className="w-4 h-4 mr-2" />
               Privacy
             </TabsTrigger>
-            <TabsTrigger value="system" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger 
+              value="system" 
+              className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm rounded-md"
+            >
               <Database className="w-4 h-4 mr-2" />
               System
             </TabsTrigger>
@@ -211,45 +238,60 @@ export default function SettingsPage() {
 
           {/* Display Settings Tab */}
           <TabsContent value="display" className="space-y-6">
-            <Card className="border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-blue-900 flex items-center">
-                  <Palette className="w-5 h-5 mr-2" />
-                  Appearance
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-6">
+                <CardTitle className="text-xl font-semibold text-gray-900 flex items-center">
+                  <Palette className="w-5 h-5 mr-2 text-blue-600" />
+                  Appearance & Display
                 </CardTitle>
+                <p className="text-gray-600">Customize how the interface looks and behaves</p>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-8">
+                {/* Theme Selection */}
                 <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium mb-3 block">Theme</label>
-                    <div className="grid grid-cols-3 gap-3">
-                      {themeOptions.map((theme) => (
-                        <div
-                          key={theme.value}
-                          className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                            displaySettings.theme === theme.value
-                              ? "border-blue-500 bg-blue-50"
-                              : "border-gray-200 hover:border-blue-300"
-                          }`}
-                          onClick={() => setDisplaySettings({ ...displaySettings, theme: theme.value })}
-                        >
-                          <div className="flex flex-col items-center gap-2">
-                            <theme.icon className="w-6 h-6 text-blue-600" />
-                            <span className="text-sm font-medium">{theme.label}</span>
+                  <label className="text-sm font-medium text-gray-700">Theme</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {themeOptions.map((theme) => (
+                      <div
+                        key={theme.value}
+                        className={`p-6 border-2 rounded-lg cursor-pointer transition-all hover:shadow-md ${
+                          displaySettings.theme === theme.value
+                            ? "border-blue-500 bg-blue-50 shadow-md"
+                            : "border-gray-200 hover:border-blue-300 bg-white"
+                        }`}
+                        onClick={() => setDisplaySettings({ ...displaySettings, theme: theme.value })}
+                      >
+                        <div className="flex flex-col items-center gap-3">
+                          <div className={`p-3 rounded-lg ${
+                            displaySettings.theme === theme.value ? 'bg-blue-100' : 'bg-gray-100'
+                          }`}>
+                            <theme.icon className={`w-6 h-6 ${
+                              displaySettings.theme === theme.value ? 'text-blue-600' : 'text-gray-600'
+                            }`} />
+                          </div>
+                          <div className="text-center">
+                            <span className="text-sm font-medium text-gray-900">{theme.label}</span>
+                            <p className="text-xs text-gray-500 mt-1">{theme.description}</p>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
+                </div>
 
+                <Separator />
+
+                {/* Language and Regional Settings */}
+                <div className="space-y-6">
+                  <h3 className="text-lg font-medium text-gray-900">Regional Settings</h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Language</label>
+                      <label className="text-sm font-medium text-gray-700">Language</label>
                       <Select
                         value={displaySettings.language}
                         onValueChange={(value) => setDisplaySettings({ ...displaySettings, language: value })}
                       >
-                        <SelectTrigger className="border-blue-200">
+                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -263,12 +305,12 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Timezone</label>
+                      <label className="text-sm font-medium text-gray-700">Timezone</label>
                       <Select
                         value={displaySettings.timezone}
                         onValueChange={(value) => setDisplaySettings({ ...displaySettings, timezone: value })}
                       >
-                        <SelectTrigger className="border-blue-200">
+                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -282,12 +324,12 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Date Format</label>
+                      <label className="text-sm font-medium text-gray-700">Date Format</label>
                       <Select
                         value={displaySettings.dateFormat}
                         onValueChange={(value) => setDisplaySettings({ ...displaySettings, dateFormat: value })}
                       >
-                        <SelectTrigger className="border-blue-200">
+                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -299,12 +341,12 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Time Format</label>
+                      <label className="text-sm font-medium text-gray-700">Time Format</label>
                       <Select
                         value={displaySettings.timeFormat}
                         onValueChange={(value) => setDisplaySettings({ ...displaySettings, timeFormat: value })}
                       >
-                        <SelectTrigger className="border-blue-200">
+                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -314,28 +356,53 @@ export default function SettingsPage() {
                       </Select>
                     </div>
                   </div>
+                </div>
 
+                <Separator />
+
+                {/* Accessibility and Performance */}
+                <div className="space-y-6">
+                  <h3 className="text-lg font-medium text-gray-900">Accessibility & Performance</h3>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-medium text-blue-900">High Contrast Mode</h4>
-                        <p className="text-sm text-gray-600">Improve visibility with higher contrast colors</p>
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                          <Eye className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">High Contrast Mode</h4>
+                          <p className="text-sm text-gray-600">Improve visibility with higher contrast colors</p>
+                        </div>
                       </div>
                       <Switch checked={highContrast} onCheckedChange={setHighContrast} />
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-medium text-blue-900">Compact Mode</h4>
-                        <p className="text-sm text-gray-600">Reduce spacing for more content on screen</p>
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-green-100 rounded-lg">
+                          <Zap className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">Compact Mode</h4>
+                          <p className="text-sm text-gray-600">Reduce spacing for more content on screen</p>
+                        </div>
                       </div>
                       <Switch checked={compactMode} onCheckedChange={setCompactMode} />
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-blue-900">Auto Refresh Interval</h4>
-                        <span className="text-sm text-blue-600">{refreshInterval[0]} seconds</span>
+                    <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="p-2 bg-purple-100 rounded-lg">
+                          <RefreshCw className="w-5 h-5 text-purple-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">Auto Refresh Interval</h4>
+                          <p className="text-sm text-gray-600">How often to refresh data automatically</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-gray-700">Refresh every</span>
+                        <span className="text-sm text-blue-600 font-medium">{refreshInterval[0]} seconds</span>
                       </div>
                       <Slider
                         value={refreshInterval}
@@ -358,20 +425,23 @@ export default function SettingsPage() {
 
           {/* Notifications Tab */}
           <TabsContent value="notifications" className="space-y-6">
-            <Card className="border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-blue-900 flex items-center">
-                  <Bell className="w-5 h-5 mr-2" />
-                  Alert Preferences
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-6">
+                <CardTitle className="text-xl font-semibold text-gray-900 flex items-center">
+                  <Bell className="w-5 h-5 mr-2 text-blue-600" />
+                  Alert & Notification Preferences
                 </CardTitle>
+                <p className="text-gray-600">Choose how you want to receive alerts and notifications</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Mail className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Mail className="w-5 h-5 text-blue-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">Email Alerts</h4>
+                        <h4 className="font-medium text-gray-900">Email Alerts</h4>
                         <p className="text-sm text-gray-600">Receive emergency alerts via email</p>
                       </div>
                     </div>
@@ -381,11 +451,13 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <MessageSquare className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <MessageSquare className="w-5 h-5 text-green-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">SMS Alerts</h4>
+                        <h4 className="font-medium text-gray-900">SMS Alerts</h4>
                         <p className="text-sm text-gray-600">Receive critical alerts via SMS</p>
                       </div>
                     </div>
@@ -395,11 +467,13 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Bell className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <Bell className="w-5 h-5 text-purple-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">Push Notifications</h4>
+                        <h4 className="font-medium text-gray-900">Push Notifications</h4>
                         <p className="text-sm text-gray-600">Browser notifications for real-time updates</p>
                       </div>
                     </div>
@@ -409,11 +483,13 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Monitor className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <Monitor className="w-5 h-5 text-orange-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">Desktop Notifications</h4>
+                        <h4 className="font-medium text-gray-900">Desktop Notifications</h4>
                         <p className="text-sm text-gray-600">System notifications on your desktop</p>
                       </div>
                     </div>
@@ -425,11 +501,13 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Volume2 className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-red-100 rounded-lg">
+                        <Volume2 className="w-5 h-5 text-red-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">Sound Alerts</h4>
+                        <h4 className="font-medium text-gray-900">Sound Alerts</h4>
                         <p className="text-sm text-gray-600">Audio notifications for alerts</p>
                       </div>
                     </div>
@@ -439,11 +517,13 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Smartphone className="w-5 h-5 text-blue-600" />
+                      <div className="p-2 bg-yellow-100 rounded-lg">
+                        <Smartphone className="w-5 h-5 text-yellow-600" />
+                      </div>
                       <div>
-                        <h4 className="font-medium text-blue-900">Vibration</h4>
+                        <h4 className="font-medium text-gray-900">Vibration</h4>
                         <p className="text-sm text-gray-600">Vibrate on mobile devices</p>
                       </div>
                     </div>
@@ -454,10 +534,21 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-4 border-t border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-blue-900">Alert Volume</h4>
-                    <span className="text-sm text-blue-600">{alertVolume[0]}%</span>
+                <Separator />
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Volume2 className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900">Alert Volume</h4>
+                      <p className="text-sm text-gray-600">Adjust the volume for sound alerts</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Volume level</span>
+                    <span className="text-sm text-blue-600 font-medium">{alertVolume[0]}%</span>
                   </div>
                   <Slider
                     value={alertVolume}
@@ -478,22 +569,23 @@ export default function SettingsPage() {
 
           {/* Privacy Tab */}
           <TabsContent value="privacy" className="space-y-6">
-            <Card className="border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-blue-900 flex items-center">
-                  <Shield className="w-5 h-5 mr-2" />
-                  Privacy & Security
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-6">
+                <CardTitle className="text-xl font-semibold text-gray-900 flex items-center">
+                  <Shield className="w-5 h-5 mr-2 text-blue-600" />
+                  Privacy & Security Settings
                 </CardTitle>
+                <p className="text-gray-600">Control your privacy and data sharing preferences</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Profile Visibility</label>
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">Profile Visibility</label>
                     <Select
                       value={privacySettings.profileVisibility}
                       onValueChange={(value) => setPrivacySettings({ ...privacySettings, profileVisibility: value })}
                     >
-                      <SelectTrigger className="border-blue-200">
+                      <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -504,10 +596,15 @@ export default function SettingsPage() {
                     </Select>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Activity Tracking</h4>
-                      <p className="text-sm text-gray-600">Track your system usage for analytics</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Activity className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Activity Tracking</h4>
+                        <p className="text-sm text-gray-600">Track your system usage for analytics</p>
+                      </div>
                     </div>
                     <Switch
                       checked={privacySettings.activityTracking}
@@ -517,10 +614,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Data Sharing</h4>
-                      <p className="text-sm text-gray-600">Share anonymized data for research</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <Globe className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Data Sharing</h4>
+                        <p className="text-sm text-gray-600">Share anonymized data for research</p>
+                      </div>
                     </div>
                     <Switch
                       checked={privacySettings.dataSharing}
@@ -528,10 +630,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Analytics Opt-in</h4>
-                      <p className="text-sm text-gray-600">Help improve the system with usage analytics</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <TrendingUp className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Analytics Opt-in</h4>
+                        <p className="text-sm text-gray-600">Help improve the system with usage analytics</p>
+                      </div>
                     </div>
                     <Switch
                       checked={privacySettings.analyticsOptIn}
@@ -539,10 +646,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Location Tracking</h4>
-                      <p className="text-sm text-gray-600">Use location for relevant alerts and data</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <MapPin className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Location Tracking</h4>
+                        <p className="text-sm text-gray-600">Use location for relevant alerts and data</p>
+                      </div>
                     </div>
                     <Switch
                       checked={privacySettings.locationTracking}
@@ -553,12 +665,23 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-medium text-blue-900 mb-4">Data Management</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-blue-900">Data Retention Period</h4>
-                      <span className="text-sm text-blue-600">{dataRetention[0]} days</span>
+                <Separator />
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-gray-900">Data Management</h3>
+                  <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Calendar className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Data Retention Period</h4>
+                        <p className="text-sm text-gray-600">How long to keep your data</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">Retain data for</span>
+                      <span className="text-sm text-blue-600 font-medium">{dataRetention[0]} days</span>
                     </div>
                     <Slider
                       value={dataRetention}
@@ -573,13 +696,13 @@ export default function SettingsPage() {
                       <span>1 year</span>
                     </div>
                   </div>
-                  <div className="flex gap-3 mt-4">
-                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-transparent">
+                  <div className="flex gap-3">
+                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-white hover:bg-blue-50">
                       <Download className="w-4 h-4 mr-2" />
                       Export My Data
                     </Button>
-                    <Button variant="outline" className="border-red-200 text-red-700 bg-transparent">
-                      <Lock className="w-4 h-4 mr-2" />
+                    <Button variant="outline" className="border-red-200 text-red-700 bg-white hover:bg-red-50">
+                      <Trash2 className="w-4 h-4 mr-2" />
                       Delete Account
                     </Button>
                   </div>
@@ -590,19 +713,25 @@ export default function SettingsPage() {
 
           {/* System Tab */}
           <TabsContent value="system" className="space-y-6">
-            <Card className="border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-blue-900 flex items-center">
-                  <Database className="w-5 h-5 mr-2" />
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-6">
+                <CardTitle className="text-xl font-semibold text-gray-900 flex items-center">
+                  <Database className="w-5 h-5 mr-2 text-blue-600" />
                   System Configuration
                 </CardTitle>
+                <p className="text-gray-600">Manage system settings and performance options</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Automatic Backup</h4>
-                      <p className="text-sm text-gray-600">Automatically backup your settings and data</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <HardDrive className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Automatic Backup</h4>
+                        <p className="text-sm text-gray-600">Automatically backup your settings and data</p>
+                      </div>
                     </div>
                     <Switch
                       checked={systemSettings.autoBackup}
@@ -610,10 +739,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Cache Enabled</h4>
-                      <p className="text-sm text-gray-600">Cache data for faster loading times</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Zap className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Cache Enabled</h4>
+                        <p className="text-sm text-gray-600">Cache data for faster loading times</p>
+                      </div>
                     </div>
                     <Switch
                       checked={systemSettings.cacheEnabled}
@@ -621,10 +755,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Data Compression</h4>
-                      <p className="text-sm text-gray-600">Compress data to save bandwidth</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <Settings className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Data Compression</h4>
+                        <p className="text-sm text-gray-600">Compress data to save bandwidth</p>
+                      </div>
                     </div>
                     <Switch
                       checked={systemSettings.compressionEnabled}
@@ -634,10 +773,15 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Debug Mode</h4>
-                      <p className="text-sm text-gray-600">Enable detailed logging for troubleshooting</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-yellow-100 rounded-lg">
+                        <Bug className="w-5 h-5 text-yellow-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Debug Mode</h4>
+                        <p className="text-sm text-gray-600">Enable detailed logging for troubleshooting</p>
+                      </div>
                     </div>
                     <Switch
                       checked={systemSettings.debugMode}
@@ -645,11 +789,16 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-blue-900">Beta Features</h4>
-                      <p className="text-sm text-gray-600">Access experimental features (may be unstable)</p>
-                    </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                          <div className="flex items-center gap-3">
+                        <div className="p-2 bg-orange-100 rounded-lg">
+                          <TestTube className="w-5 h-5 text-orange-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">Beta Features</h4>
+                          <p className="text-sm text-gray-600">Access experimental features (may be unstable)</p>
+                        </div>
+                      </div>
                     <Switch
                       checked={systemSettings.betaFeatures}
                       onCheckedChange={(checked) => setSystemSettings({ ...systemSettings, betaFeatures: checked })}
@@ -657,57 +806,79 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-medium text-blue-900 mb-4">System Maintenance</h4>
+                <Separator />
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-gray-900">System Maintenance</h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-transparent">
+                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-white hover:bg-blue-50">
                       <RefreshCw className="w-4 h-4 mr-2" />
                       Clear Cache
                     </Button>
-                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-transparent">
+                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-white hover:bg-blue-50">
                       <Download className="w-4 h-4 mr-2" />
                       Download Logs
                     </Button>
-                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-transparent">
+                    <Button variant="outline" className="border-blue-200 text-blue-700 bg-white hover:bg-blue-50">
                       <Upload className="w-4 h-4 mr-2" />
                       Import Settings
                     </Button>
-                    <Button variant="outline" className="border-yellow-200 text-yellow-700 bg-transparent">
-                      <RefreshCw className="w-4 h-4 mr-2" />
+                    <Button variant="outline" className="border-yellow-200 text-yellow-700 bg-white hover:bg-yellow-50">
+                      <RotateCcw className="w-4 h-4 mr-2" />
                       Reset System
                     </Button>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-medium text-blue-900 mb-4">System Information</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Version:</span>
-                        <span className="font-medium">ClimaTech AI v2.1.0</span>
+                <Separator />
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-gray-900">System Information</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Info className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm text-gray-600">Version:</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">ClimaTech AI v2.1.0</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Build:</span>
-                        <span className="font-medium">2024.01.31</span>
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm text-gray-600">Build:</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">2024.01.31</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Environment:</span>
-                        <span className="font-medium">Production</span>
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Globe className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm text-gray-600">Environment:</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">Production</span>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Last Update:</span>
-                        <span className="font-medium">Jan 31, 2024</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm text-gray-600">Last Update:</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">Jan 31, 2024</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Server Status:</span>
-                        <Badge className="bg-green-100 text-green-800">Online</Badge>
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span className="text-sm text-gray-600">Server Status:</span>
+                        </div>
+                        <Badge className="bg-green-50 text-green-700 border border-green-200">Online</Badge>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">API Status:</span>
-                        <Badge className="bg-green-100 text-green-800">Operational</Badge>
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span className="text-sm text-gray-600">API Status:</span>
+                        </div>
+                        <Badge className="bg-green-50 text-green-700 border border-green-200">Operational</Badge>
                       </div>
                     </div>
                   </div>
